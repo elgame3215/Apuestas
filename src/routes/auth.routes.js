@@ -1,10 +1,7 @@
-import { OAuth2Client } from 'google-auth-library';
 import passport from 'passport';
 import { POLICIES } from '../enums/policies.js';
 import { Router } from './router.js';
 import { setToken } from '../utils/jwt.utils.js';
-
-new OAuth2Client({});
 
 class AuthRouter extends Router {
 	constructor() {
@@ -12,11 +9,11 @@ class AuthRouter extends Router {
 		this.init();
 	}
 	init() {
-		this.post(
+		this.get(
 			'/google',
-			[POLICIES.PUBLIC],
+			{ policies: [POLICIES.PUBLIC] },
 			passport.authenticate('google', {
-				scope: ['email'],
+				scope: ['email', 'https://www.googleapis.com/auth/spreadsheets'],
 				session: false,
 				accessType: 'offline',
 				prompt: 'consent',
@@ -25,7 +22,7 @@ class AuthRouter extends Router {
 
 		this.get(
 			'/google/callback',
-			[POLICIES.PUBLIC],
+			{ policies: [POLICIES.PUBLIC] },
 			passport.authenticate('google', {
 				failureRedirect: '/login',
 				session: false,

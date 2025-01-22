@@ -2,12 +2,16 @@ import { allowInsecurePrototypeAccess } from '@handlebars/allow-prototype-access
 import { authRouter } from './routes/auth.routes.js';
 import { CONFIG } from './config/config.js';
 import cookieParser from 'cookie-parser';
+import { CustomError } from './errors/CustomError.js';
 import { engine } from 'express-handlebars';
 import express from 'express';
 import Handlebars from 'handlebars';
 import { initializePassport } from './auth/passport.init.js';
 import mongoose from 'mongoose';
 import passport from 'passport';
+import { sheetsRouter } from './routes/sheets.api.routes.js';
+import { UnauthorizedError } from './errors/generic.errors.js';
+import { viewsRoutes } from './routes/view.routes.js';
 
 
 const app = express();
@@ -37,10 +41,23 @@ app.engine(
 
 // ROUTES
 app.get('/', (req, res) => {
-	res.render('login');
+	res.render('home');
 });
 
+app.use('/api/sheets', sheetsRouter);
 app.use('/auth', authRouter);
+app.use('/', viewsRoutes);
+
+app.use((err, req, res, next) => {
+	if (!(err instanceof CustomError)) {
+		console.error(err);
+		throw err;
+	}
+	if (err instanceof UnauthorizedError) {
+		return res.render('login');
+	}
+	return next(err);
+});
 
 app.listen(PORT, () => {
 	console.log(`Server up on http://localhost:${PORT}`); // eslint-disable-line no-console

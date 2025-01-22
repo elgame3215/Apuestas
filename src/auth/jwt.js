@@ -18,6 +18,7 @@ export function initJwtPassport() {
 				if (!user) {
 					return done(new UserNotFoundError(), false);
 				}
+				user.accessToken = payload.accessToken;
 				return done(null, user);
 			}
 		)

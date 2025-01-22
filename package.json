@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch src/app.js"
+    "dev": "node --watch src/app.js --env dev",
+    "prod": "node --watch src/app.js --env prod"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,7 @@
   "description": "",
   "dependencies": {
     "@handlebars/allow-prototype-access": "^1.0.5",
+    "commander": "^13.1.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
@@ -25,7 +27,7 @@
     "mongoose": "^8.9.5",
     "passport": "^0.7.0",
     "passport-google-oauth": "^2.0.0",
-    "passport-google-oauth20": "^2.0.0",
+    "passport-google-one-tap": "^1.0.1",
     "passport-jwt": "^4.0.1"
   },
   "devDependencies": {

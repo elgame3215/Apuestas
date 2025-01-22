@@ -1,8 +1,9 @@
 import { CONFIG } from '../config/config.js';
-import { createToken } from '../utils/jwt.utils.js';
+import { google } from 'googleapis';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import passport from 'passport';
 import { UserService } from '../db/services/user.service.js';
+
 
 export function initGooglePassport() {
 	passport.use(
@@ -14,7 +15,6 @@ export function initGooglePassport() {
 			},
 			async function (accessToken, refreshToken, profile, done) {
 				try {
-					console.log(profile);
 					let user = await UserService.getUserByGoogleId(profile.id);
 					if (!user) {
 						user = await UserService.createUser({
@@ -24,6 +24,7 @@ export function initGooglePassport() {
 							googleRefreshToken: refreshToken,
 						});
 					}
+					user.accessToken = accessToken
 					return done(null, user);
 				} catch (err) {
 					console.error(err);

@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="/css/table.css">
+<link rel="stylesheet" href="/css/home.css">
+<link rel="stylesheet" href="/css/input.css">
+<link rel='stylesheet' type='text/css' href='https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css' />
+<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/toastify-js'></script>
+
+
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<th>Fran</th>
+				<th>Lean</th>
+				<th>Leo</th>
+				<th>Nahu</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th>Betano</th>
+				<td id="franco-betano-cell"> <span id="franco-betano" class="amount-el"></span>
+					<button onclick="editCell(this)" class="edit-btn input-btn">editar</button>
+				</td>
+				<td id="leandro-betano-cell"> <span id="leandro-betano" class="amount-el"></span>
+					<button onclick="editCell(this)" class="edit-btn input-btn">editar</button>
+				</td>
+				<td id="leonel-betano-cell"> <span id="leonel-betano" class="amount-el"></span>
+					<button onclick="editCell(this)" class="edit-btn input-btn">editar</button>
+				</td>
+				<td id="nahuel-betano-cell"> <span id="nahuel-betano" class="amount-el"></span>
+					<button onclick="editCell(this)" class="edit-btn input-btn">editar</button>
+				</td>
+			</tr>
+			<tr>
+				<th>Bet365</th>
+				<td id="franco-bet365-cell"> <span id="franco-bet365" class="amount-el"></span>
+					<button onclick="editCell(this)" class="edit-btn input-btn">editar</button>
+				</td>
+				<td id="leandro-bet365-cell"> <span id="leandro-bet365" class="amount-el"></span>
+					<button onclick="editCell(this)" class="edit-btn input-btn">editar</button>
+				</td>
+				<td id="leonel-bet365-cell"> <span id="leonel-bet365" class="amount-el"></span>
+					<button onclick="editCell(this)" class="edit-btn input-btn">editar</button>
+				</td>
+				<td id="nahuel-bet365-cell"> <span id="nahuel-bet365" class="amount-el"></span>
+					<button onclick="editCell(this)" class="edit-btn input-btn">editar</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<nav class="menu">
+		<span class="nav-item active">
+			<button id="confirm-btn" class="nav-item" onclick="confirmChanges()">Confirmar</button>
+		</span>
+		<span class="nav-item active">
+			<a href="/" id="home">Inicio</a>
+		</span>
+
+	</nav>
+
+</body>
+<script src="/js/edit.balance.js"></script>
+<script src="/js/render.table.amounts.js"></script>
