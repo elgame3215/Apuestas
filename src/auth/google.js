@@ -1,5 +1,4 @@
 import { CONFIG } from '../config/config.js';
-import { google } from 'googleapis';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import passport from 'passport';
 import { UserService } from '../db/services/user.service.js';
@@ -24,7 +23,7 @@ export function initGooglePassport() {
 							googleRefreshToken: refreshToken,
 						});
 					}
-					user.accessToken = accessToken
+					user.accessToken = accessToken;
 					return done(null, user);
 				} catch (err) {
 					console.error(err);
