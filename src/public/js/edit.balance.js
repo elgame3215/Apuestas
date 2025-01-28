@@ -33,7 +33,7 @@ function confirmChanges() {
 		body[user][platform] = Number(spanEl.textContent.trim().slice(1));
 	}
 	const bodyJSON = JSON.stringify(body, null, 4);
-	fetch('/api/sheets/table', {
+	fetch('/api/sheets/liquid-table', {
 		method: 'PUT',
 		headers: { 'Content-Type': 'application/json' },
 		body: bodyJSON,

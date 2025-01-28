@@ -33,13 +33,28 @@ export const CONFIG = {
 	JWT: {
 		SECRET: process.env.JWT_SECRET,
 	},
-	SPREADSHEET: {
-		ID: process.env.SPREADSHEET_ID,
-	},
-	USERS: {
-		franco: { cells: { betano: 'B3', bet365: 'C3' } },
-		leandro: { cells: { betano: 'B5', bet365: 'C5' } },
-		leonel: { cells: { betano: 'B7', bet365: 'C7' } },
-		nahuel: { cells: { betano: 'B9', bet365: 'C9' } },
-	},
+	SPREADSHEET_ID: process.env.SPREADSHEET_ID,
+	USERS: ['franco', 'leandro', 'leonel', 'nahuel'],
+	USERS_CELLS: [
+		{
+			user: 'franco',
+			cells: { betano: 'B3', bet365: 'C3' },
+			namedRange: 'francoAmounts',
+		},
+		{
+			user: 'leandro',
+			cells: { betano: 'B5', bet365: 'C5' },
+			namedRange: 'leandroAmounts',
+		},
+		{
+			user: 'leonel',
+			cells: { betano: 'B7', bet365: 'C7' },
+			namedRange: 'leonelAmounts',
+		},
+		{
+			user: 'nahuel',
+			cells: { betano: 'B9', bet365: 'C9' },
+			namedRange: 'nahuelAmounts',
+		},
+	],
 };

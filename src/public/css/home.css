@@ -28,6 +28,7 @@ body {
 		1px 2px 4px #141414,
 		0 4px 12px #0a0a0a;
 	justify-content: space-evenly;
+	min-width: 70%;
 }
 .nav-item {
 	flex-direction: row-reverse;
@@ -51,7 +52,7 @@ body {
 	border-color: white;
 }
 .nav-item {
-	border-right: 0.1rem solid black;
+	border-left: 0.1rem solid black;
 }
 .nav-item a,
 .nav-item button {

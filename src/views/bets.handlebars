@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="/css/home.css">
+<link rel="stylesheet" href="/css/input.css">
+<link rel="stylesheet" href="/css/bets.css">
+
+<style>
+	.interface {
+		display: flex;
+		align-items: center;
+		flex-basis: content;
+	}
+
+	button {
+		min-width: 20%;
+		max-height: fit-content;
+	}
+</style>
+
+<h1>Apuestas</h1>
+<main>
+	<div class="interface">
+		<section id="bets-container">
+			<h2>Apuestas de misión</h2>
+		</section>
+		<button class="input-btn" onclick="window.location.href = '/register-bet'">Nueva apuesta</button>
+	</div>
+	<div class="interface">
+		<section id="free-bets-container">
+			<h2>Apuestas gratis</h2>
+		</section>
+		<button class="input-btn" onclick="window.location.href = '/register-free-bet'">Nueva apuesta</button>
+	</div>
+</main>
+
+<nav class="menu">
+	<span class="nav-item active">
+		<a href="/" id="home">Inicio</a>
+	</span>
+</nav>
+
+<script src="/js/fetch.bets.js"></script>
+<script src="/js/render.bets.js"></script>
+<script src="/js/resolve.bets.js"></script>
+<script>
+	function toggleItem(item) {
+		item.classList.toggle('expanded');
+	}
+</script>

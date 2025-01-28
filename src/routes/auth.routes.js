@@ -1,5 +1,5 @@
 import passport from 'passport';
-import { POLICIES } from '../enums/policies.js';
+import { POLICIES } from '../constants/enums/policies.js';
 import { Router } from './router.js';
 import { setToken } from '../utils/jwt.utils.js';
 
@@ -11,7 +11,7 @@ class AuthRouter extends Router {
 	init() {
 		this.get(
 			'/google',
-			{ policies: [POLICIES.PUBLIC] },
+			[POLICIES.PUBLIC],
 			passport.authenticate('google', {
 				scope: ['email', 'https://www.googleapis.com/auth/spreadsheets'],
 				session: false,
@@ -22,7 +22,7 @@ class AuthRouter extends Router {
 
 		this.get(
 			'/google/callback',
-			{ policies: [POLICIES.PUBLIC] },
+			[POLICIES.PUBLIC],
 			passport.authenticate('google', {
 				failureRedirect: '/login',
 				session: false,

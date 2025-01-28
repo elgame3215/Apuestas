@@ -1,4 +1,4 @@
-import { POLICIES } from '../../enums/policies.js';
+import { POLICIES } from '../../constants/enums/policies.js';
 import { model, Schema } from 'mongoose';
 
 const userSchema = new Schema({

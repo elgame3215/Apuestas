@@ -1,8 +1,7 @@
 import { Router as ExpressRouter } from 'express';
 import passport from 'passport';
-import { POLICIES } from '../enums/policies.js';
+import { POLICIES } from '../constants/enums/policies.js';
 import {
-	BadRequestError,
 	UnauthorizedError,
 } from '../errors/generic.errors.js';
 
@@ -18,7 +17,6 @@ export class Router {
 	handlePolicies(policies) {
 		return async (req, res, next) => {
 			if (policies.includes(POLICIES.PUBLIC)) {
-				console.log('paso handlePolicies');
 				return next();
 			}
 			passport.authenticate('jwt', { session: false }, (err, user) => {
@@ -36,38 +34,15 @@ export class Router {
 	}
 
 	/**
-	 * @param {String[]} requiredCamps
-	 */
-	validateRequiredCamps(requiredCamps) {
-		return (req, res, next) => {
-			if (requiredCamps.length == 0) {
-				return next();
-			}
-			for (const camp of requiredCamps) {
-				if (!(req.body[camp] ?? false)) {
-					return next(
-						new BadRequestError(
-							`${camp} es requerido pero no se encontró en el cuerpo de la petición`
-						)
-					);
-				}
-			}
-			return next();
-		};
-	}
-
-	/**
 	 *
 	 * @param {String} path
 	 * @param {Object} options
 	 * @param {String[]} options.policies
-	 * @param {String[]} [options.requiredCamps]
 	 * @param  {...import('express').RequestHandler} callbacks
 	 */
-	get(path, { policies, requiredCamps = [] }, ...callbacks) {
+	get(path, policies, ...callbacks) {
 		this.router.get(
 			path,
-			this.validateRequiredCamps(requiredCamps),
 			this.handlePolicies(policies),
 			...callbacks
 		);
@@ -77,13 +52,11 @@ export class Router {
 	 * @param {String} path
 	 * @param {Object} options
 	 * @param {String[]} options.policies
-	 * @param {String[]} [options.requiredCamps]
 	 * @param  {...import('express').RequestHandler} callbacks
 	 */
-	post(path, { policies, requiredCamps = [] }, ...callbacks) {
+	post(path, policies, ...callbacks) {
 		this.router.post(
 			path,
-			this.validateRequiredCamps(requiredCamps),
 			this.handlePolicies(policies),
 			...callbacks
 		);
@@ -93,13 +66,11 @@ export class Router {
 	 * @param {String} path
 	 * @param {Object} options
 	 * @param {String[]} options.policies
-	 * @param {String[]} [options.requiredCamps]
 	 * @param  {...import('express').RequestHandler} callbacks
 	 */
-	put(path, { policies, requiredCamps = [] }, ...callbacks) {
+	put(path, policies, ...callbacks) {
 		this.router.put(
 			path,
-			this.validateRequiredCamps(requiredCamps),
 			this.handlePolicies(policies),
 			...callbacks
 		);
@@ -109,13 +80,11 @@ export class Router {
 	 * @param {String} path
 	 * @param {Object} options
 	 * @param {String[]} options.policies
-	 * @param {String[]} [options.requiredCamps]
 	 * @param  {...import('express').RequestHandler} callbacks
 	 */
-	delete(path, { policies, requiredCamps = [] }, ...callbacks) {
+	delete(path, policies, ...callbacks) {
 		this.router.delete(
 			path,
-			this.validateRequiredCamps(requiredCamps),
 			this.handlePolicies(policies),
 			...callbacks
 		);

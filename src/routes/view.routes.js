@@ -1,4 +1,4 @@
-import { POLICIES } from '../enums/policies.js';
+import { POLICIES } from '../constants/enums/policies.js';
 import { Router } from './router.js';
 
 class ViewsRoutes extends Router {
@@ -6,22 +6,22 @@ class ViewsRoutes extends Router {
 		super();
 	}
 	init() {
-		this.get('/login', { policies: [POLICIES.PUBLIC] }, (req, res) => {
+		this.get('/login',  [POLICIES.PUBLIC], (req, res) => {
 			res.render('login');
 		});
 		this.get(
-			'/balance-y-apuestas',
-			{ policies: [POLICIES.USER] },
+			'/balance',
+			 [POLICIES.USER],
 			(req, res) => {
-				res.render('balance-y-apuestas');
+				res.render('balance');
 			}
 		);
-		this.get('/register-win', { policies: [POLICIES.USER] }, (req, res) => {
+		this.get('/register-win',  [POLICIES.USER], (req, res) => {
 			res.render('regis-gan');
 		});
 		this.get(
 			'/registrar-ganancia/:user',
-			{ policies: [POLICIES.USER] },
+			 [POLICIES.USER],
 			(req, res) => {
 				const { user } = req.params;
 				res.render('regis-gan-user', { user });
@@ -29,14 +29,23 @@ class ViewsRoutes extends Router {
 		);
 		this.get(
 			'/registrar-ganancia/:user/:platforn',
-			{ policies: [POLICIES.USER] },
+			 [POLICIES.USER],
 			(req, res) => {
 				const { user, platform } = req.params;
 				res.render('regis-gan-user-plataforma', { user, platform });
 			}
 		);
-		this.get('/edit-balance', { policies: [POLICIES.USER] }, (req, res) => {
+		this.get('/edit-balance',  [POLICIES.USER], (req, res) => {
 			res.render('edit-balance');
+		});
+		this.get('/bets',  [POLICIES.USER], (req, res) => {
+			res.render('bets');
+		});
+		this.get('/register-bet',  [POLICIES.USER], (req, res) => {
+			res.render('register-bet');
+		});
+		this.get('/register-free-bet',  [POLICIES.USER], (req, res) => {
+			res.render('register-free-bet');
 		});
 	}
 }

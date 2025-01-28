@@ -1,76 +1,37 @@
-import { InternalServerError } from '../errors/generic.errors.js';
-import { parseRange } from '../middleware/api.sheet.body.parser.js';
-import passport from 'passport';
-import { POLICIES } from '../enums/policies.js';
+import { POLICIES } from '../constants/enums/policies.js';
 import { Router } from './router.js';
-import { SheetsClient } from '../classes/SheetsClient.js';
+import { SheetsController } from '../controllers/api/sheets.controller.js';
+import { validate } from '../validations/validate.js';
+import { betSchema } from '../validations/schemas/schema.bet.js';
 
 class SheetsRouter extends Router {
 	constructor() {
 		super();
 	}
 	init() {
-		this.put(
-			'/sum-single-cell',
-			{
-				policies: [POLICIES.USER],
-				requiredCamps: ['amount', 'user', 'platform'],
-			},
-			passport.authenticate('jwt', { session: false }),
-			parseRange,
-			async (req, res, next) => {
-				const { cellRange, amount } = req.body;
-				const sheetsClient = await new SheetsClient(req.user.accessToken);
-				try {
-					const response = await sheetsClient.setCellValues(cellRange, [
-						[amount],
-					]);
-					res.status(200).json(response);
-				} catch (err) {
-					console.error(err);
-					next(new InternalServerError());
-				}
-			}
-		);
 		this.get(
-			'/table',
-			{ policies: [POLICIES.USER] },
-			passport.authenticate('jwt', { session: false }),
-			async (req, res, next) => {
-				const sheetsClient = new SheetsClient(req.user.accessToken);
-				try {
-					const response = await sheetsClient.getLiquidTable();
-					res.status(200).json(response);
-				} catch (err) {
-					console.error(err);
-					next(new InternalServerError());
-				}
-			}
+			'/liquid-table',
+			[POLICIES.ADMIN, POLICIES.USER],
+			SheetsController.getLiquidTable
 		);
-		this.put(
-			'/table',
-			{
-				policies: [POLICIES.USER],
-				requiredCamps: ['franco', 'leandro', 'leonel', 'nahuel'],
-			},
-			passport.authenticate('jwt', { session: false }),
-			async (req, res, next) => {
-				const valueRange = [];
-				for (const userName in req.body) {
-					const user = req.body[userName];
-					const userAmounts = [user.betano, user.bet365];
-					valueRange.push(['Betano', 'Bet365']);
-					valueRange.push(userAmounts);
-				}
-				const sheetsClient = new SheetsClient(req.user.accessToken);
-				try {
-					const response = await sheetsClient.updateTable(valueRange);
-					res.status(200).json(response);
-				} catch (err) {
-					console.error(err);
-					next(new InternalServerError());
-				}
-			}
+
+		this.get(
+			'/bets',
+			[POLICIES.USER, POLICIES.ADMIN],
+			SheetsController.getBetsTable
+		);
+
+		this.get(
+			'/free-bets',
+			[POLICIES.USER, POLICIES.ADMIN],
+			SheetsController.getFreeBets
+		);
+
+		this.post(
+			'/bet',
+			[POLICIES.USER, POLICIES.ADMIN],
+			validate(betSchema),
+			SheetsController.setNewBet
 		);
 	}
 }

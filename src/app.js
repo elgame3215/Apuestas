@@ -13,12 +13,11 @@ import { sheetsRouter } from './routes/sheets.api.routes.js';
 import { UnauthorizedError } from './errors/generic.errors.js';
 import { viewsRoutes } from './routes/view.routes.js';
 
-
 const app = express();
 const PORT = CONFIG.PORT || 8000;
 
 // EXPRESS
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 app.use(express.static('./src/public'));
 
@@ -44,6 +43,10 @@ app.get('/', (req, res) => {
 	res.render('home');
 });
 
+app.use('/api', (req, res, next) => {
+	req.isApiReq = true;
+	return next();
+});
 app.use('/api/sheets', sheetsRouter);
 app.use('/auth', authRouter);
 app.use('/', viewsRoutes);
@@ -53,10 +56,10 @@ app.use((err, req, res, next) => {
 		console.error(err);
 		throw err;
 	}
-	if (err instanceof UnauthorizedError) {
+	if (err instanceof UnauthorizedError && !req.isApiReq) {
 		return res.render('login');
 	}
-	return next(err);
+	return res.status(err.code).json({ success: false, detail: err.message });
 });
 
 app.listen(PORT, () => {
