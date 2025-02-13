@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"jsx": "react",
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"checkJs": true,
+		"module": "ES6",
+		
+	},
+	"include": ["src/**/*"]
+}
