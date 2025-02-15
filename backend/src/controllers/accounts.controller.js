@@ -1,18 +1,20 @@
 import { accountListResSchema } from '../dtos/account/res.account.list.dto.js';
 import { AccountNotFoundError } from '../errors/account.errors.js';
 import { accountResSchema } from '../dtos/account/res.account.dto.js';
-import { AccountsService } from '../db/services/account.service.js';
+import { AccountsService } from '../services/account.service.js';
+import { InternalServerError } from '../errors/generic.errors.js';
 import { sendSuccess } from '../utils/custom.responses.js';
 
 export class AccountsController {
-	static async deleteAccountByUsername(req, res, next) {
-		const { username } = req.params;
+	static async deleteAccountById(req, res, next) {
+		const { id } = req.params;
 		try {
-			const deletedAccount =
-				await AccountsService.deleteAccountByUsername(username);
+			const deletedAccount = await AccountsService.deleteAccountById(id);
+
 			if (!deletedAccount) {
 				return next(new AccountNotFoundError());
 			}
+
 			return sendSuccess({
 				res,
 				next,
@@ -22,17 +24,20 @@ export class AccountsController {
 				dtoSchema: accountResSchema,
 			});
 		} catch (error) {
-			return next(error);
+			console.error(error);
+			return next(new InternalServerError());
 		}
 	}
-	static async getAccountByUsername(req, res, next) {
-		const { username } = req.params;
+	static async getAccountById(req, res, next) {
+		const { id } = req.params;
 
 		try {
-			const account = await AccountsService.getAccountByUsername(username);
+			const account = await AccountsService.getAccountById(id);
+
 			if (!account) {
 				return next(new AccountNotFoundError());
 			}
+
 			return sendSuccess({
 				res,
 				next,
@@ -41,7 +46,8 @@ export class AccountsController {
 				dtoSchema: accountResSchema,
 			});
 		} catch (error) {
-			return next(error);
+			console.error(error);
+			return next(new InternalServerError());
 		}
 	}
 	static async createAccount(req, res, next) {
@@ -57,7 +63,8 @@ export class AccountsController {
 				dtoSchema: accountResSchema,
 			});
 		} catch (error) {
-			return next(error);
+			console.error(error);
+			return next(new InternalServerError());
 		}
 	}
 
@@ -72,16 +79,17 @@ export class AccountsController {
 				dtoSchema: accountListResSchema,
 			});
 		} catch (error) {
-			return next(error);
+			console.error(error);
+			return next(new InternalServerError());
 		}
 	}
 
-	static async updateAccountByUsername(req, res, next) {
+	static async updateAccountById(req, res, next) {
 		try {
-			const { username } = req.params;
+			const { id } = req.params;
 			const account = req.body;
-			const updatedAccount = await AccountsService.updateAccountByUsername(
-				username,
+			const updatedAccount = await AccountsService.updateAccountById(
+				id,
 				account
 			);
 
@@ -97,7 +105,8 @@ export class AccountsController {
 				dtoSchema: accountResSchema,
 			});
 		} catch (error) {
-			return next(error);
+			console.error(error);
+			return next(new InternalServerError());
 		}
 	}
 }

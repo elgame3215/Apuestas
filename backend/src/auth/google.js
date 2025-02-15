@@ -1,8 +1,8 @@
 import { CONFIG } from '../config/config.js';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import passport from 'passport';
-import { POLICIES } from '../constants/enums/policies.js';
-import { UserService } from '../db/services/user.service.js';
+import { POLICIES } from '../constants/enums/index.js';
+import { UserService } from '../services/user.service.js';
 
 export function initGooglePassport() {
 	passport.use(

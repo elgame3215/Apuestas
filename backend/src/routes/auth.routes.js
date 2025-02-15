@@ -1,6 +1,6 @@
 import { CONFIG } from '../config/config.js';
 import passport from 'passport';
-import { POLICIES } from '../constants/enums/policies.js';
+import { POLICIES } from '../constants/enums/index.js';
 import { Router } from './router.js';
 import { setToken } from '../utils/jwt.utils.js';
 

@@ -1,6 +1,6 @@
 import { Router as ExpressRouter } from 'express';
 import passport from 'passport';
-import { POLICIES } from '../constants/enums/policies.js';
+import { POLICIES } from '../constants/enums/index.js';
 import { UnauthorizedError } from '../errors/generic.errors.js';
 
 export class Router {

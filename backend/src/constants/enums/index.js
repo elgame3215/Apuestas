@@ -3,3 +3,9 @@ export const POLICIES = {
 	USER: 'user',
 	ADMIN: 'admin',
 };
+
+export const BET_STATES = {
+	ACTIVE: 'active',
+	WON: 'won',
+	LOST: 'lost',
+};

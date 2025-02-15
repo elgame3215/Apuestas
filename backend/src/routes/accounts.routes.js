@@ -1,8 +1,9 @@
 import { accountReqSchema } from '../dtos/account/req.account.dto.js';
 import { AccountsController } from '../controllers/accounts.controller.js';
-import { POLICIES } from '../constants/enums/policies.js';
+import { mongoIdSchema } from '../dtos/mongo.id.dto.js';
+import { POLICIES } from '../constants/enums/index.js';
 import { Router } from './router.js';
-import { validate } from 'express-joi-validations';
+import { validate, validateParams } from 'express-joi-validations';
 
 class AccountsRouter extends Router {
 	constructor() {
@@ -21,22 +22,25 @@ class AccountsRouter extends Router {
 		this.get('/', [POLICIES.PUBLIC], AccountsController.getAccounts);
 
 		this.get(
-			'/:username',
+			'/:id',
 			[POLICIES.PUBLIC],
-			AccountsController.getAccountByUsername
+			validateParams(mongoIdSchema),
+			AccountsController.getAccountById
 		);
 
 		this.put(
-			'/:username',
+			'/:id',
 			[POLICIES.PUBLIC],
+			validateParams(mongoIdSchema),
 			validate({ body: accountReqSchema }),
-			AccountsController.updateAccountByUsername
+			AccountsController.updateAccountById
 		);
 
 		this.delete(
-			'/:username',
+			'/:id',
 			[POLICIES.PUBLIC],
-			AccountsController.deleteAccountByUsername
+			validateParams(mongoIdSchema),
+			AccountsController.deleteAccountById
 		);
 	}
 }
