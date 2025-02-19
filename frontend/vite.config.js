@@ -7,7 +7,7 @@ import viteCompression from 'vite-plugin-compression';
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd(), '');
 	return {
-		base: env.VITE_FRONTEND_HOST,
+		base: '/Apuestas/',
 		define: {
 			__APP_ENV__: JSON.stringify(env.APP_ENV),
 		},
