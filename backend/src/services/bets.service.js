@@ -27,6 +27,10 @@ export class BetsService {
 							$unset: { oppositeBet: '', group: '' },
 						}
 					);
+				} else {
+					await betModel.findByIdAndUpdate(bet.oppositeBet.id, {
+						$unset: { group: '' },
+					});
 				}
 
 				return await betModel
