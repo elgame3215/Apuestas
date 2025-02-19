@@ -26,7 +26,7 @@ export function CardsContainer() {
 	});
 	return (
 		<main className="flex flex-col items-center gap-9">
-			<AddButton handleClick={() => {window.location.href = '/new-bet'}} text="Agregar apuesta"></AddButton>
+			<AddButton text="Agregar apuesta"></AddButton>
 			{activeBets.length ? (
 				activeBetCardsNode
 			) : (
