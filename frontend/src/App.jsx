@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, RouterProvider, Routes } from 'react-router-dom';
 import { Home } from './pages/Home.jsx';
 import { NotFound } from './pages/NotFound.jsx';
 import { Login } from './pages/Login.jsx';
@@ -8,6 +8,17 @@ import ConfigProvider from 'antd/es/config-provider';
 import { COLORS } from './constants/colors.js';
 import { Bets } from './pages/Bets.jsx';
 import { RegisterBet } from './pages/RegisterBet.jsx';
+import { createHashRouter } from 'react-router-dom';
+
+const Router = createHashRouter([
+	{ path: '/', element: <Home /> },
+	{ path: '/home', element: <Home /> },
+	{ path: '/balance', element: <Balance /> },
+	{ path: '/bets', element: <Bets /> },
+	{ path: '/new-bet', element: <RegisterBet /> },
+	{ path: '/login', element: <Login /> },
+	{ path: '/*', element: <NotFound /> },
+]);
 
 function App() {
 	return (
@@ -31,7 +42,7 @@ function App() {
 							headerFontSize: 18,
 							colorBgContainer: COLORS.GREY,
 							colorBorderSecondary: COLORS.GREEN,
-							headerHeight: 10
+							headerHeight: 10,
 						},
 						Tabs: {
 							itemSelectedColor: COLORS.GREEN,
@@ -47,17 +58,7 @@ function App() {
 				}}
 			>
 				<div className="min-h-screen w-screen flex justify-center items-center bg-bg-menu p-4">
-					<Router basename={import.meta.env.BASE_URL}>
-						<Routes>
-							<Route path="/" element={<Home />} />
-							<Route path="/home" element={<Home />} />
-							<Route path="/balance" element={<Balance />} />
-							<Route path="/bets" element={<Bets />} />
-							<Route path="/new-bet" element={<RegisterBet />} />
-							<Route path="/login" element={<Login />} />
-							<Route path="/*" element={<NotFound />} />
-						</Routes>
-					</Router>
+					<RouterProvider router={Router}></RouterProvider>
 				</div>
 			</ConfigProvider>
 		</>
