@@ -2,7 +2,7 @@ import React from 'react';
 import { BetCard } from './BetCard.jsx';
 import { useBetsContext } from '../../hooks/useBetsContext.js';
 import { HorizontalNavBar } from '../layouts/HorizontalNavBar.jsx';
-import { AddButton } from '../UI/AddButton.jsx';
+import { Link } from 'react-router-dom';
 
 export function CardsContainer() {
 	const { bets } = useBetsContext();
@@ -26,7 +26,7 @@ export function CardsContainer() {
 	});
 	return (
 		<main className="flex flex-col items-center gap-9">
-			<AddButton text="Agregar apuesta"></AddButton>
+			<Link to="/new-bet"></Link>
 			{activeBets.length ? (
 				activeBetCardsNode
 			) : (
