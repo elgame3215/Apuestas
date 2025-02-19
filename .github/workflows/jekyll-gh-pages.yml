@@ -3,7 +3,7 @@ name: Deploy Vite Frontend to GitHub Pages
 on:
   push:
     branches:
-      - main  # Cambia esto si tu rama principal se llama "master"
+      - master # Cambia esto si tu rama principal se llama "master"
   workflow_dispatch:
 
 permissions:
