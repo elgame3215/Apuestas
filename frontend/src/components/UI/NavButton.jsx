@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export function NavButton({ text, href, leftBorder = false }) {
 	let className = 'text-green size justify-center flex p-5';
@@ -7,9 +8,9 @@ export function NavButton({ text, href, leftBorder = false }) {
 	}
 	return (
 		<span className={className}>
-			<a className="text-3xl text-center" href={href}>
+			<Link className="text-3xl text-center" to={href}>
 				{text}
-			</a>
+			</Link>
 		</span>
 	);
 }
