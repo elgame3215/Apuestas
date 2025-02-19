@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DislikeOutlined from '@ant-design/icons/DislikeOutlined.js';
 import CloseCircleFilled from '@ant-design/icons/CloseCircleFilled.js';
 import LikeOutlined from '@ant-design/icons/LikeOutlined.js';
-import { Card } from 'antd';
+import Card from 'antd/es/card';
 import { useBetsContext } from '../../hooks/useBetsContext.js';
 import { formatToCurrency } from '../Tables/utils.js';
 import { COLORS } from '../../constants/colors.js';
