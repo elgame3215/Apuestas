@@ -3,6 +3,7 @@ import { BetCard } from './BetCard.jsx';
 import { useBetsContext } from '../../hooks/useBetsContext.js';
 import { HorizontalNavBar } from '../layouts/HorizontalNavBar.jsx';
 import { Link } from 'react-router-dom';
+import { COLORS } from '../../constants/colors.js';
 
 export function CardsContainer() {
 	const { bets } = useBetsContext();
@@ -26,7 +27,19 @@ export function CardsContainer() {
 	});
 	return (
 		<main className="flex flex-col items-center gap-9">
-			<Link to="/new-bet"></Link>
+			<Link
+				to="/new-bet"
+				style={{
+					marginBottom: 16,
+					backgroundColor: COLORS.BACKGROUND,
+					color: COLORS.GREEN,
+					borderRadius: 5,
+					padding: 6,
+					border: `.05rem solid ${COLORS.GREEN}`,
+				}}
+			>
+				Agregar apuesta
+			</Link>
 			{activeBets.length ? (
 				activeBetCardsNode
 			) : (
