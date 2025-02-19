@@ -31,7 +31,7 @@ export function useBets() {
 		group,
 	}) {
 		const body = { description, odds, amount, accounts, oppositeBet, group };
-		const response = await fetch('/api/bets', {
+		const response = await fetch(`${import.meta.env.VITE_BACKEND_HOST}/api/bets`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(body),
@@ -41,7 +41,7 @@ export function useBets() {
 
 	async function resolveBet(betID, { betResult }) {
 		const body = { betResult };
-		const response = await fetch(`/api/bets/resolve/${betID}`, {
+		const response = await fetch(`${import.meta.env.VITE_BACKEND_HOST}/api/bets/resolve/${betID}`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(body),
@@ -51,7 +51,7 @@ export function useBets() {
 
 
 	async function cancelBet(betID) {
-		const response = await fetch(`/api/bets/${betID}`, {
+		const response = await fetch(`${import.meta.env.VITE_BACKEND_HOST}/api/bets/${betID}`, {
 			method: 'DELETE',
 		});
 		return await response.json();

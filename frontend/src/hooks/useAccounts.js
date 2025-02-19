@@ -40,7 +40,7 @@ export function useAccounts({ formatter, setCount }) {
 		loadAmounts();
 	}, []);
 	async function updateAccount({ account, id }) {
-		const response = await fetch(`/api/accounts/${id}`, {
+		const response = await fetch(`${import.meta.env.VITE_BACKEND_HOST}/api/accounts/${id}`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(account),
@@ -49,7 +49,7 @@ export function useAccounts({ formatter, setCount }) {
 	}
 
 	async function registerAccount({ account }) {
-		const response = await fetch('/api/accounts', {
+		const response = await fetch(`${import.meta.env.VITE_BACKEND_HOST}/api/accounts`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(account),
@@ -58,7 +58,7 @@ export function useAccounts({ formatter, setCount }) {
 	}
 
 	async function deleteAccount({ id }) {
-		const response = await fetch(`/api/accounts/${id}`, {
+		const response = await fetch(`${import.meta.env.VITE_BACKEND_HOST}/api/accounts/${id}`, {
 			method: 'DELETE',
 		});
 		return await response.json();
