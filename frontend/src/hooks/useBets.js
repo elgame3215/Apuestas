@@ -1,15 +1,60 @@
-import { useEffect } from "react";
-import { fetchBets } from "../services/fetchBets.js";
+import { useEffect, useState } from 'react';
+import { fetchBets } from '../services/fetchBets.js';
 
 export function useBets() {
+	const [bets, setBets] = useState([]);
+	const [error, setError] = useState(null);
+
 	useEffect(() => {
 		async function loadBets() {
 			try {
-				const data = await fetchBets();
+				const { bets, status } = await fetchBets();
+				if (status == 401) {
+					window.location.href = '/login';
+					return;
+				}
+				setBets(bets);
+				console.log({ bets });
 			} catch (error) {
-				
+				console.error(error);
+				setError(error);
 			}
-
 		}
-	})
+		loadBets();
+	}, []);
+	async function registerBet({
+		description,
+		odds,
+		amount,
+		accounts,
+		oppositeBet,
+		group,
+	}) {
+		const body = { description, odds, amount, accounts, oppositeBet, group };
+		const response = await fetch('/api/bets', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(body),
+		});
+		return await response.json();
+	}
+
+	async function resolveBet(betID, { betResult }) {
+		const body = { betResult };
+		const response = await fetch(`/api/bets/resolve/${betID}`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(body),
+		});
+		return await response.json();
+	}
+
+
+	async function cancelBet(betID) {
+		const response = await fetch(`/api/bets/${betID}`, {
+			method: 'DELETE',
+		});
+		return await response.json();
+	}
+	return { bets, error, registerBet, resolveBet, cancelBet };
 }

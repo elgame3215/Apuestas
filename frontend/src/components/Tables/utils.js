@@ -11,10 +11,10 @@ export function formatAccountsData(data) {
 }
 
 export function renderCurrency(val) {
-	return parseToCurrency(val);
+	return formatToCurrency(val);
 }
 
-export function parseToCurrency(total) {
+export function formatToCurrency(total) {
 	return Intl.NumberFormat('de-DE', {
 		style: 'currency',
 		currency: 'USD',

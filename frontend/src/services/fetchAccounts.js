@@ -1,4 +1,4 @@
-export async function fetchAmounts() {
+export async function fetchAccounts() {
 	const response = await fetch(`/api/accounts`, {
 		credentials: 'include',
 	});

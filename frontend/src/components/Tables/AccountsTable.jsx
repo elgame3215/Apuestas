@@ -11,8 +11,9 @@ import { COLORS } from '../../constants/colors.js';
 import { ToastContainer } from 'react-toastify';
 import { toastifyError } from '../../toastify/error.js';
 import { Summary } from './Summary.jsx';
+import { AddButton } from '../UI/AddButton.jsx';
 
-export const AccountsTable = () => {
+export function AccountsTable() {
 	const [count, setCount] = useState(0);
 	const {
 		accounts,
@@ -46,7 +47,6 @@ export const AccountsTable = () => {
 		{
 			title: 'Cuenta',
 			dataIndex: 'cuenta',
-			width: '35%',
 			editable: true,
 		},
 		{
@@ -149,18 +149,7 @@ export const AccountsTable = () => {
 	});
 	return (
 		<div>
-			<Button
-				onClick={handleAdd}
-				type="primary"
-				style={{
-					marginBottom: 16,
-					backgroundColor: COLORS.BACKGROUND,
-					color: COLORS.GREEN,
-					border: `.05rem solid ${COLORS.GREEN}`,
-				}}
-			>
-				Agregar cuenta
-			</Button>
+			<AddButton handleClick={handleAdd} text="Agregar cuenta"></AddButton>
 			<Table
 				components={components}
 				size="middle"
@@ -174,4 +163,4 @@ export const AccountsTable = () => {
 			<ToastContainer />
 		</div>
 	);
-};
+}

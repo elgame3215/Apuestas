@@ -4,7 +4,7 @@ import { AccountsTable } from '../components/Tables/AccountsTable.jsx';
 
 export function Balance() {
 	return (
-		<div className="flex flex-col h-screen justify-evenly items-center">
+		<div className="flex flex-col h-screen w-screen justify-evenly items-center">
 			<AccountsTable></AccountsTable>
 			<HorizontalNavBar prevPage="home"></HorizontalNavBar>
 		</div>

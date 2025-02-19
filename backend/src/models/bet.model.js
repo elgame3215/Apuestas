@@ -4,6 +4,7 @@ import { model, Schema } from 'mongoose';
 
 const betSchema = new Schema(
 	{
+		group: String,
 		description: { type: String, required: true },
 		accounts: [{ type: Schema.Types.ObjectId, ref: 'account', required: true }],
 		amount: { type: Number, required: true },
@@ -45,6 +46,16 @@ betSchema.pre('updateMany', function () {
 });
 
 betSchema.pre('findOneAndUpdate', function () {
+	this.populate('oppositeBet');
+	this.populate('accounts');
+});
+
+betSchema.pre('findOneAndDelete', function () {
+	this.populate('oppositeBet');
+	this.populate('accounts');
+});
+
+betSchema.pre('deleteOne', function () {
 	this.populate('oppositeBet');
 	this.populate('accounts');
 });

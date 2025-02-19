@@ -3,5 +3,5 @@ export async function fetchBets() {
 		credentials: 'include',
 	});
 	const data = await response.json();
-	return { data: data.payload, status: response.status };
+	return { bets: data.payload, status: response.status };
 }

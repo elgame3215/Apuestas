@@ -3,4 +3,6 @@ export const COLORS = {
 	BACKGROUND: '#222',
 	WHITE: '#fff',
 	GREY: '#444',
+	RED: '#ea0000',
+	LIGHTGREY: '#BBB'
 };

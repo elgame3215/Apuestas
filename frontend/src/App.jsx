@@ -6,6 +6,8 @@ import React from 'react';
 import { Balance } from './pages/Balance.jsx';
 import ConfigProvider from 'antd/es/config-provider';
 import { COLORS } from './constants/colors.js';
+import { Bets } from './pages/Bets.jsx';
+import { RegisterBet } from './pages/RegisterBet.jsx';
 
 function App() {
 	return (
@@ -22,21 +24,36 @@ function App() {
 							cellPaddingInline: 8,
 							cellPaddingBlock: 14,
 							colorBgContainer: COLORS.GREY,
+							cellFontSizeMD: 11,
+						},
+						Card: {
+							fontSize: 14,
+							headerFontSize: 18,
+							colorBgContainer: COLORS.GREY,
+							colorBorderSecondary: COLORS.GREEN,
+							headerHeight: 10
+						},
+						Tabs: {
+							itemSelectedColor: COLORS.GREEN,
+							inkBarColor: COLORS.GREEN,
 						},
 					},
 					token: {
-						colorText: COLORS.GREEN,
+						colorText: COLORS.WHITE,
 						colorWarning: COLORS.GREEN,
 						lineWidth: 2,
+						colorPrimary: COLORS.GREEN,
 					},
 				}}
 			>
-				<div className="h-screen w-screen flex justify-center items-center bg-bg-menu">
+				<div className="min-h-screen w-screen flex justify-center items-center bg-bg-menu p-4">
 					<Router>
 						<Routes>
 							<Route path="/" element={<Home />} />
 							<Route path="/home" element={<Home />} />
 							<Route path="/balance" element={<Balance />} />
+							<Route path="/bets" element={<Bets />} />
+							<Route path="/new-bet" element={<RegisterBet />} />
 							<Route path="/login" element={<Login />} />
 							<Route path="/*" element={<NotFound />} />
 						</Routes>

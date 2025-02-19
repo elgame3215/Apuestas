@@ -5,3 +5,9 @@ export class BetNotFoundError extends CustomError {
 		super('Apuesta no encontrada', 400);
 	}
 }
+
+export class InactiveBetError extends CustomError {
+	constructor() {
+		super('La apuesta ya no esta activa', 400);
+	}
+}

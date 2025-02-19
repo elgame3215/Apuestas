@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { fetchAmounts } from '../services/fetchAmounts.js';
+import { fetchAccounts } from '../services/fetchAccounts.js';
 
 /**
  *
  * @param {Object} param
- * @param {Function} param.formatter
- * @param {Function} param.setCount
+ * @param {Function} [param.formatter]
+ * @param {Function} [param.setCount]
  * @returns
  */
 export function useAccounts({ formatter, setCount }) {
@@ -15,16 +15,22 @@ export function useAccounts({ formatter, setCount }) {
 	useEffect(() => {
 		async function loadAmounts() {
 			try {
-				const { data, status } = await fetchAmounts();
+				const { data, status } = await fetchAccounts();
+
 				if (status === 401) {
 					window.location.href = '/login';
 					return;
 				}
-				setCount(data.length);
+
+				if (setCount) {
+					setCount(data.length);
+				}
+
 				if (formatter) {
 					setAccounts(formatter(data));
 					return;
 				}
+
 				setAccounts(data);
 			} catch (err) {
 				console.error(err);
