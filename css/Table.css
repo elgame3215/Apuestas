@@ -1,0 +1,36 @@
+table {
+	border-collapse: collapse;
+	min-width: 70%;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	background-color: #282828;
+	color: #00ea00;
+}
+th,
+td {
+	padding: 12px;
+	text-align: center;
+}
+
+th {
+	font-size: 1.2rem;
+}
+
+td {
+	font-size: 1.25rem;
+}
+
+th,
+tr {
+	border: #282828 solid;
+}
+
+th {
+	background-color: #00ea00;
+	color: #222;
+}
+tr:nth-child(even) {
+	background-color: #383838;
+}
+tr:hover {
+	background-color: #444;
+}
