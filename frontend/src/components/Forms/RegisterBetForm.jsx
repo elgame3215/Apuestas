@@ -8,11 +8,17 @@ import { SingleBetForm } from './SingleBetForm.jsx';
 import { DoubleBetForm } from './DoubleBetForm.jsx';
 import { toastifyError } from '../../toastify/error.js';
 import { useBets } from '../../hooks/useBets.js';
+import { useNavigate } from 'react-router-dom';
 
-const inputStyle = { backgroundColor: COLORS.GREY, borderColor: COLORS.GREEN, maxwidth: '80%' };
+const inputStyle = {
+	backgroundColor: COLORS.GREY,
+	borderColor: COLORS.GREEN,
+	maxwidth: '80%',
+};
 const itemStyle = 'max-w-[80%]';
 
 export function RegisterBetForm() {
+	const navigate = useNavigate();
 	const { accounts } = useAccounts({});
 	const { registerBet } = useBets();
 	const [betType, setBetType] = useState('single');
@@ -29,7 +35,7 @@ export function RegisterBetForm() {
 		try {
 			registerBet(values);
 			setTimeout(() => {
-				window.location.href = '/bets';
+				navigate('/bets');
 			}, 500);
 		} catch (error) {
 			toastifyError({ message: 'Error al registrar la apuesta' });
