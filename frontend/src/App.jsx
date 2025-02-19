@@ -47,7 +47,7 @@ function App() {
 				}}
 			>
 				<div className="min-h-screen w-screen flex justify-center items-center bg-bg-menu p-4">
-					<Router>
+					<Router basename={import.meta.env.BASE_URL}>
 						<Routes>
 							<Route path="/" element={<Home />} />
 							<Route path="/home" element={<Home />} />
