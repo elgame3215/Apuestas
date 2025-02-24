@@ -1,4 +1,5 @@
 export async function fetchBets() {
+	console.log('fetching');
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_HOST}/api/bets`, {
 		credentials: 'include',
 	});

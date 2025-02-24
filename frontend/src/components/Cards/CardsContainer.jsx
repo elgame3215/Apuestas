@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BetCard } from './BetCard.jsx';
-import { useBetsContext } from '../../hooks/useBetsContext.js';
+import { useBets } from '../../hooks/useBets.js';
 import { HorizontalNavBar } from '../layouts/HorizontalNavBar.jsx';
 import { Link } from 'react-router-dom';
 import { COLORS } from '../../constants/colors.js';
 
 export function CardsContainer() {
-	const { bets } = useBetsContext();
+	const { bets, loading, error, getBets } = useBets();
+
+	useEffect(() => {
+		getBets();
+	}, []);
+
+	if (loading) return <h1>Cargando...</h1>;
+	if (error) return <h1>Error</h1>;
 
 	const activeBets = bets.filter(bet => bet.status === 'active');
 

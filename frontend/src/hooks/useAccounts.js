@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchAccounts } from '../services/fetchAccounts.js';
+import { fetchAccounts } from '../services/accounts.js';
 import { useNavigate } from 'react-router-dom';
 
 /**

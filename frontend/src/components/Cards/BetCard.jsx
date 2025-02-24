@@ -3,7 +3,7 @@ import DislikeOutlined from '@ant-design/icons/DislikeOutlined.js';
 import CloseCircleFilled from '@ant-design/icons/CloseCircleFilled.js';
 import LikeOutlined from '@ant-design/icons/LikeOutlined.js';
 import Card from 'antd/es/card';
-import { useBetsContext } from '../../hooks/useBetsContext.js';
+import { useBets } from '../../hooks/useBets.js';
 import { formatToCurrency } from '../Tables/utils.js';
 import { COLORS } from '../../constants/colors.js';
 import { toastifyError } from '../../toastify/error.js';
@@ -19,7 +19,7 @@ export function BetCard({
 }) {
 	const [activeTabKey, setActiveTabKey] = useState(betID);
 	const [betStatus, setBetStatus] = useState('active');
-	const { resolveBet, cancelBet } = useBetsContext();
+	const { resolveBet, cancelBet } = useBets();
 
 	if (betStatus !== 'active') {
 		return null;

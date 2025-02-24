@@ -9,6 +9,7 @@ import { DoubleBetForm } from './DoubleBetForm.jsx';
 import { toastifyError } from '../../toastify/error.js';
 import { useBets } from '../../hooks/useBets.js';
 import { useNavigate } from 'react-router-dom';
+import Checkbox from 'antd/es/checkbox';
 
 const inputStyle = {
 	backgroundColor: COLORS.GREY,
@@ -29,6 +30,7 @@ export function RegisterBetForm() {
 	};
 
 	function onfinish(values) {
+		console.log({ values });
 		if (values.oppositeBet) {
 			values.oppositeBet.group = values.group;
 		}
@@ -69,8 +71,9 @@ export function RegisterBetForm() {
 				className="flex justify-center"
 				style={{ marginTop: '5%' }}
 				name="betType"
+				initialValue="single"
 			>
-				<Radio.Group defaultValue="single">
+				<Radio.Group>
 					<Radio.Button style={inputStyle} value="single">
 						Simple
 					</Radio.Button>
@@ -78,6 +81,11 @@ export function RegisterBetForm() {
 						Doble
 					</Radio.Button>
 				</Radio.Group>
+			</Form.Item>
+			<Form.Item name="isFreeBet" valuePropName='checked' initialValue={false}>
+				<Checkbox name="isFreeBet" value={true}>
+					Apuesta gratis
+				</Checkbox>
 			</Form.Item>
 			{betType === 'single' ? (
 				<SingleBetForm

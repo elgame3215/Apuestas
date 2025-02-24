@@ -9,6 +9,7 @@ const betSchema = new Schema(
 		accounts: [{ type: Schema.Types.ObjectId, ref: 'account', required: true }],
 		amount: { type: Number, required: true },
 		odds: { type: Number, required: true },
+		isFreeBet: { type: Boolean, default: false, required: true },
 		status: {
 			type: String,
 			default: 'active',

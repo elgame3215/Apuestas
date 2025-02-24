@@ -6,6 +6,7 @@ import viteCompression from 'vite-plugin-compression';
 
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd(), '');
+	console.log(env);
 	return {
 		base: '/Apuestas/',
 		define: {
@@ -27,14 +28,5 @@ export default defineConfig(({ mode }) => {
 			}),
 			viteCompression({ algorithm: 'gzip', ext: '.gz' }),
 		],
-		server: {
-			proxy: {
-				'/api': {
-					target: env.VITE_BACKEND_HOST,
-					changeOrigin: true,
-					secure: false,
-				},
-			},
-		},
 	};
 });

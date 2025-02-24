@@ -9,15 +9,17 @@ export class BetsService {
 		const session = await mongoose.startSession();
 		try {
 			const deletedBet = await session.withTransaction(async function () {
-				for (const account of bet.accounts) {
-					await AccountsService.increaseAmountById(
-						{
-							id: account.id,
-							amount: bet.amount,
-							platform: PLATFORMS.BETANO,
-						},
-						{ session }
-					);
+				if (!bet.isFreeBet) {
+					for (const account of bet.accounts) {
+						await AccountsService.increaseAmountById(
+							{
+								id: account.id,
+								amount: bet.amount,
+								platform: PLATFORMS.BETANO,
+							},
+							{ session }
+						);
+					}
 				}
 
 				if (!bet.oppositeBet) {
@@ -65,28 +67,31 @@ export class BetsService {
 	static async registerBet(bet) {
 		const session = await mongoose.startSession();
 		try {
-			const responseBet = await session.withTransaction(async function () {
+			const newBetId = await session.withTransaction(async () => {
 				console.log({ bet });
 				if (bet.oppositeBet) {
-					const oppositeBet = await BetsService.registerBet(bet.oppositeBet);
+					const oppositeBet = await this.registerBet(bet.oppositeBet);
 					bet.oppositeBet = oppositeBet.id;
 				}
 				console.log('hola');
 
 				const [newBet] = await betModel.create([bet], { session });
-				for (const accountID of bet.accounts) {
-					await AccountsService.increaseAmountById(
-						{
-							id: accountID,
-							amount: -newBet.amount,
-							platform: PLATFORMS.BETANO,
-						},
-						{ session }
-					);
+
+				if (!bet.isFreeBet) {
+					for (const accountID of bet.accounts) {
+						await AccountsService.increaseAmountById(
+							{
+								id: accountID,
+								amount: -bet.amount,
+								platform: PLATFORMS.BETANO,
+							},
+							{ session }
+						);
+					}
 				}
-				return newBet;
+				return newBet.get('_id');
 			});
-			return await betModel.findById(responseBet._id).lean({ virtuals: true });
+			return betModel.findById(newBetId).lean({ virtuals: true });
 		} catch (error) {
 			console.error(error);
 			return;
@@ -106,11 +111,12 @@ export class BetsService {
 		id,
 		{ betResult, isOppositeBetResolved = false }
 	) {
-		const bet = await betModel.findById(id);
 		const session = await mongoose.startSession();
 		try {
 			const responseBet = await session.withTransaction(async () => {
-				bet.$set({ status: betResult });
+				const bet = await betModel
+					.findByIdAndUpdate(id, { $set: { status: betResult } }, { new: true })
+					.lean({ virtuals: true });
 
 				if (betResult == 'won') {
 					for (const account of bet.accounts) {
@@ -118,17 +124,19 @@ export class BetsService {
 							{
 								id: account._id,
 								platform: PLATFORMS.BETANO,
-								amount: bet.amount * bet.odds,
+								amount:
+									bet.amount * bet.odds - (bet.isFreeBet ? bet.amount : 0),
 							},
 							{ session }
 						);
 					}
 				}
-				const updatedBet = await bet.save({ session });
-
-				if (!isOppositeBetResolved) {
+				if (bet.group && !isOppositeBetResolved) {
 					const oppositeBet =
 						bet.oppositeBet ?? (await betModel.findOne({ oppositeBet: id }));
+
+					console.log({ oppositeBet });
+
 					oppositeBet &&
 						(await this.resolveBetById(oppositeBet._id, {
 							betResult: betResult === 'won' ? 'lost' : 'won',
@@ -136,7 +144,7 @@ export class BetsService {
 						}));
 				}
 
-				return updatedBet;
+				return bet;
 			});
 			return await betModel.findById(responseBet._id).lean({ virtuals: true });
 		} catch (error) {

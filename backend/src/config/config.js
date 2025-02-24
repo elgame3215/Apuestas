@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 
 const program = new Command();
 program.option('-e, --env <string>', 'environment', 'dev');
-const env = program.opts().env;
+const { env } = program.opts();
 let envPath;
 switch (env) {
 	case 'dev':
@@ -29,35 +29,11 @@ export const CONFIG = {
 	},
 	MONGO: {
 		URL: process.env.MONGO_URL,
-		DB_NAME: process.env.MONGO_DB_NAME
+		DB_NAME: process.env.MONGO_DB_NAME,
 	},
 	JWT: {
 		SECRET: process.env.JWT_SECRET,
 	},
-	SPREADSHEET_ID: process.env.SPREADSHEET_ID,
-	USERS: ['franco', 'leandro', 'leonel', 'nahuel'],
-	USERS_CELLS: [
-		{
-			user: 'franco',
-			cells: { betano: 'B3', bet365: 'C3' },
-			namedRange: 'francoAmounts',
-		},
-		{
-			user: 'leandro',
-			cells: { betano: 'B5', bet365: 'C5' },
-			namedRange: 'leandroAmounts',
-		},
-		{
-			user: 'leonel',
-			cells: { betano: 'B7', bet365: 'C7' },
-			namedRange: 'leonelAmounts',
-		},
-		{
-			user: 'nahuel',
-			cells: { betano: 'B9', bet365: 'C9' },
-			namedRange: 'nahuelAmounts',
-		},
-	],
 	ADMIN_EMAILS: ['francofumiere321@gmail.com'],
 	FRONTEND_URL: process.env.FRONTEND_URL,
 };

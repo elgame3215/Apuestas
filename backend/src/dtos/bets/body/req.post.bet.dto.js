@@ -13,6 +13,7 @@ let betPostReqSchema = Joi.object({
 	accounts: Joi.array().items(mongoIdSchema).required(),
 	amount: Joi.number().min(0).required(),
 	odds: Joi.number().min(1).precision(2).positive().required(),
+	isFreeBet: Joi.boolean().required(),
 });
 
 betPostReqSchema = betPostReqSchema.keys({ oppositeBet: betPostReqSchema });

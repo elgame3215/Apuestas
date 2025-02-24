@@ -9,6 +9,7 @@ let betResSchema = betPostReqSchema.keys({
 	accounts: Joi.array().items(accountResSchema).required(),
 	status: Joi.string().valid(...Object.values(BET_STATES)),
 	id: mongoIdSchema.required(),
+	isFreeBet: Joi.boolean().required(),
 });
 
 betResSchema = betResSchema.keys({
