@@ -1,4 +1,4 @@
-import { DtoError } from '../errors/validation.errors.js';
+import { DtoError } from '../errors/validation.errors.js'
 
 /**
  *
@@ -11,22 +11,22 @@ import { DtoError } from '../errors/validation.errors.js';
  * @param {import("joi").AnySchema} [data.dtoSchema]
  * @returns
  */
-export function sendSuccess({ res, next, code, detail, payload, dtoSchema }) {
-	const response = { success: true };
-	if (detail) {
-		response.detail = detail;
-	}
-	if (payload) {
-		const { error, value } = dtoSchema.validate(payload, {
-			convert: true,
-			stripUnknown: true,
-		});
-		if (error) {
-			return next(new DtoError(error));
-		}
-		response.payload = value;
-	}
-	return res.status(code).json(response);
+export function sendSuccess ({ res, next, code, detail, payload, dtoSchema }) {
+  const response = { success: true }
+  if (detail) {
+    response.detail = detail
+  }
+  if (payload) {
+    const { error, value } = dtoSchema.validate(payload, {
+      convert: true,
+      stripUnknown: true
+    })
+    if (error) {
+      return next(new DtoError(error))
+    }
+    response.payload = value
+  }
+  return res.status(code).json(response)
 }
 
 /**
@@ -37,6 +37,6 @@ export function sendSuccess({ res, next, code, detail, payload, dtoSchema }) {
  * @param {String} data.message
  * @returns
  */
-export function sendError({ res, code, message }) {
-	return res.status(code).json({ status: 'error', message, code });
+export function sendError ({ res, code, message }) {
+  return res.status(code).json({ status: 'error', message, code })
 }

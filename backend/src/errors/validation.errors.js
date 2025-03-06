@@ -1,7 +1,7 @@
-import { CustomError } from "./CustomError.js";
+import { CustomError } from './CustomError.js'
 
 export class DtoError extends CustomError {
-	constructor(dtoError) {
-		super(dtoError.details[0].message, 400);
-	}
+  constructor (dtoError) {
+    super(dtoError.details[0].message, 400)
+  }
 }

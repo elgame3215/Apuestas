@@ -1,7 +1,7 @@
-import { CustomError } from './CustomError.js';
+import { CustomError } from './CustomError.js'
 
 export class AccountNotFoundError extends CustomError {
-	constructor() {
-		super('Account not found', 404);
-	}
+  constructor () {
+    super('Account not found', 404)
+  }
 }

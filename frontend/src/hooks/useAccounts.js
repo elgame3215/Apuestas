@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { fetchAccounts } from '../services/accounts.js';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { fetchAccounts } from '../services/accounts.js'
+import { useNavigate } from 'react-router-dom'
 
 /**
  *
@@ -9,77 +9,77 @@ import { useNavigate } from 'react-router-dom';
  * @param {Function} [param.setCount]
  * @returns
  */
-export function useAccounts({ formatter, setCount }) {
-	const navigate = useNavigate();
-	const [accounts, setAccounts] = useState(null);
-	const [error, setError] = useState(null);
+export function useAccounts ({ formatter, setCount }) {
+  const navigate = useNavigate()
+  const [accounts, setAccounts] = useState(null)
+  const [error, setError] = useState(null)
 
-	useEffect(() => {
-		async function loadAmounts() {
-			try {
-				const { data, status } = await fetchAccounts();
+  useEffect(() => {
+    async function loadAmounts () {
+      try {
+        const { data, status } = await fetchAccounts()
 
-				if (status === 401) {
-					navigate('/login');
-					return;
-				}
+        if (status === 401) {
+          navigate('/login')
+          return
+        }
 
-				if (setCount) {
-					setCount(data.length);
-				}
+        if (setCount) {
+          setCount(data.length)
+        }
 
-				if (formatter) {
-					setAccounts(formatter(data));
-					return;
-				}
+        if (formatter) {
+          setAccounts(formatter(data))
+          return
+        }
 
-				setAccounts(data);
-			} catch (err) {
-				console.error(err);
-				setError(err);
-			}
-		}
-		loadAmounts();
-	}, []);
-	async function updateAccount({ account, id }) {
-		const response = await fetch(
+        setAccounts(data)
+      } catch (err) {
+        console.error(err)
+        setError(err)
+      }
+    }
+    loadAmounts()
+  }, [])
+  async function updateAccount ({ account, id }) {
+    const response = await fetch(
 			`${import.meta.env.VITE_BACKEND_HOST}/api/accounts/${id}`,
 			{
-				method: 'PUT',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(account),
+			  method: 'PUT',
+			  headers: { 'Content-Type': 'application/json' },
+			  body: JSON.stringify(account)
 			}
-		);
-		return await response.json();
-	}
+    )
+    return await response.json()
+  }
 
-	async function registerAccount({ account }) {
-		const response = await fetch(
+  async function registerAccount ({ account }) {
+    const response = await fetch(
 			`${import.meta.env.VITE_BACKEND_HOST}/api/accounts`,
 			{
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(account),
+			  method: 'POST',
+			  headers: { 'Content-Type': 'application/json' },
+			  body: JSON.stringify(account)
 			}
-		);
-		return await response.json();
-	}
+    )
+    return await response.json()
+  }
 
-	async function deleteAccount({ id }) {
-		const response = await fetch(
+  async function deleteAccount ({ id }) {
+    const response = await fetch(
 			`${import.meta.env.VITE_BACKEND_HOST}/api/accounts/${id}`,
 			{
-				method: 'DELETE',
+			  method: 'DELETE'
 			}
-		);
-		return await response.json();
-	}
-	return {
-		accounts,
-		setAccounts,
-		registerAccount,
-		updateAccount,
-		deleteAccount,
-		error,
-	};
+    )
+    return await response.json()
+  }
+  return {
+    accounts,
+    setAccounts,
+    registerAccount,
+    updateAccount,
+    deleteAccount,
+    error
+  }
 }

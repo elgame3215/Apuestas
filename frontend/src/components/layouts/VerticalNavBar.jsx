@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavButton } from '../UI/NavButton.jsx';
+import React from 'react'
+import { NavButton } from '../UI/NavButton.jsx'
 
 /**
  * @typedef {Object} ButtonData
@@ -15,20 +15,20 @@ import { NavButton } from '../UI/NavButton.jsx';
 /**
  * @param {VerticalNavBarProps} props - Propiedades del componente.
  */
-export function VerticalNavBar({ buttons }) {
-	return (
-		<nav
-			className="flex justify-center gap-y-5 flex-col shadow-[1px_2px_4px_#141414,_0_4px_12px_#0a0a0a] shadow-black p-3 min-w-fit"
-			id="nav"
-		>
-			{buttons.map(button => (
-				<NavButton
-					leftBorder
-					text={button.text}
-					href={button.href}
-					key={button.text}
-				></NavButton>
-			))}
-		</nav>
-	);
+export function VerticalNavBar ({ buttons }) {
+  return (
+    <nav
+      className='flex justify-center gap-y-5 flex-col shadow-[1px_2px_4px_#141414,_0_4px_12px_#0a0a0a] shadow-black p-3 min-w-fit'
+      id='nav'
+    >
+      {buttons.map(button => (
+        <NavButton
+          leftBorder
+          text={button.text}
+          href={button.href}
+          key={button.text}
+        />
+      ))}
+    </nav>
+  )
 }
