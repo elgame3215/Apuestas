@@ -54,7 +54,6 @@ export function CardsContainer () {
         : (
           <h1 className='text-green'>No hay apuestas</h1>
           )}
-      <HorizontalNavBar prevPage='home' />
     </main>
   )
 }
