@@ -1,4 +1,5 @@
 export async function fetchAccounts () {
+	console.log('backend url: ', import.meta.env.VITE_BACKEND_HOST);
   const response = await fetch(`${import.meta.env.VITE_BACKEND_HOST}/api/accounts`, {
     credentials: 'include'
   })
