@@ -1,4 +1,7 @@
 import React from 'react'
+import { CONFIG } from '../config/config.js';
+
+const { BACKEND_URL } = CONFIG;
 
 export function Login () {
   return (
@@ -10,7 +13,7 @@ export function Login () {
             <h2>Sign In</h2>
             <a
               className='sign-google'
-              href={`${import.meta.env.VITE_BACKEND_HOST}/api/auth/google`}
+              href={`${BACKEND_URL}/api/auth/google`}
             >
               <img className='google-logo w-7' src='/assets/pngwing.com.png' />
               Iniciar sesión con Google
