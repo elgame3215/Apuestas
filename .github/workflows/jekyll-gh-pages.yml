@@ -35,7 +35,7 @@ jobs:
         working-directory: frontend
 
       - name: Create .env file
-        run: echo "VITE_BACKEND_HOST=${{ secrets.VITE_BACKEND_HOST }}" > frontend/.env.production
+        run: echo "VITE_BACKEND_HOST=${{ secrets.VITE_BACKEND_HOST }}" > .env.production
         working-directory: frontend
 
       - name: Build project
