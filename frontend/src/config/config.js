@@ -1,5 +1,4 @@
-const BACKEND_URL =
-	import.meta.env.VITE_BACKEND_HOST
+const BACKEND_URL = import.meta.env.VITE_BACKEND_HOST
 
 export const CONFIG = {
   BACKEND_URL

@@ -11,10 +11,7 @@ export function Login () {
         <div className='signin'>
           <div className='content'>
             <h2>Sign In</h2>
-            <a
-              className='sign-google'
-              href={`${BACKEND_URL}/api/auth/google`}
-            >
+            <a className='sign-google' href={`${BACKEND_URL}/api/auth/google`}>
               <img className='google-logo w-7' src='/assets/pngwing.com.png' />
               Iniciar sesión con Google
             </a>

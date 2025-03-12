@@ -14,7 +14,7 @@ export function useBets () {
   async function getBets () {
     try {
       const { bets, status } = await fetchBets()
-      if (status == 401) {
+      if (status === 401) {
         navigate('/login')
         return
       }

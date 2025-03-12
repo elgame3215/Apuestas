@@ -21,7 +21,7 @@ export function AccountsTable () {
     registerAccount,
     updateAccount,
     deleteAccount,
-	 loading,
+    loading,
     error
   } = useAccounts({
     formatter: formatAccountsData,

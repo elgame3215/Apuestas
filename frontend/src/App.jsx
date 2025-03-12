@@ -1,4 +1,9 @@
-import { Route, RouterProvider, Routes, createHashRouter } from 'react-router-dom'
+import {
+  Route,
+  RouterProvider,
+  Routes,
+  createHashRouter
+} from 'react-router-dom'
 import { Home } from './pages/Home.jsx'
 import { NotFound } from './pages/NotFound.jsx'
 import { Login } from './pages/Login.jsx'
