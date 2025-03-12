@@ -34,12 +34,10 @@ jobs:
         run: npm ci
         working-directory: frontend
 
-      - name: Create .env file
-        run: echo "VITE_BACKEND_HOST=${{ env.VITE_BACKEND_HOST }}***" > .env.production
-        working-directory: frontend
-
       - name: Build project
         run: npm run build
+        env:
+          VITE_BACKEND_HOST: ${{ env.VITE_BACKEND_HOST }}
         working-directory: frontend
 
       - name: Upload artifact
