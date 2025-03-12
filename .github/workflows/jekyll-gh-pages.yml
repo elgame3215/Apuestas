@@ -39,7 +39,7 @@ jobs:
         working-directory: frontend
 
       - name: Log .env file
-        run: echo .env.production
+        run: cat .env.production
         working-directory: frontend
 
       - name: Build project
