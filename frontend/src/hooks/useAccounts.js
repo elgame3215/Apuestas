@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { fetchAccounts } from '../services/accounts.js';
-import { useNavigate } from 'react-router-dom';
-import { CONFIG } from '../config/config.js';
+import { useEffect, useState } from 'react'
+import { fetchAccounts } from '../services/accounts.js'
+import { useNavigate } from 'react-router-dom'
+import { CONFIG } from '../config/config.js'
 
 /**
  *
@@ -11,69 +11,73 @@ import { CONFIG } from '../config/config.js';
  * @returns
  */
 
-const { BACKEND_URL } = CONFIG;
-export function useAccounts({ formatter, setCount }) {
-	const navigate = useNavigate();
-	const [accounts, setAccounts] = useState(null);
-	const [error, setError] = useState(null);
+const { BACKEND_URL } = CONFIG
+export function useAccounts ({ formatter, setCount }) {
+  const navigate = useNavigate()
+  const [accounts, setAccounts] = useState(null)
+  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(true)
 
-	useEffect(() => {
-		async function loadAmounts() {
-			try {
-				const { data, status } = await fetchAccounts();
+  useEffect(() => {
+    async function loadAmounts () {
+      try {
+        const { data, status } = await fetchAccounts()
 
-				if (status === 401) {
-					navigate('/login');
-					return;
-				}
+        if (status === 401) {
+          navigate('/login')
+          return
+        }
 
-				if (setCount) {
-					setCount(data.length);
-				}
+        if (setCount) {
+          setCount(data.length)
+        }
 
-				if (formatter) {
-					setAccounts(formatter(data));
-					return;
-				}
+        if (formatter) {
+          setAccounts(formatter(data))
+          return
+        }
 
-				setAccounts(data);
-			} catch (err) {
-				console.error(err);
-				setError(err);
-			}
-		}
-		loadAmounts();
-	}, []);
-	async function updateAccount({ account, id }) {
-		const response = await fetch(`${BACKEND_URL}/api/accounts/${id}`, {
-			method: 'PUT',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(account),
-		});
-		return await response.json();
-	}
+        setAccounts(data)
+      } catch (err) {
+        console.error(err)
+        setError(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadAmounts()
+  }, [])
+  async function updateAccount ({ account, id }) {
+    const response = await fetch(`${BACKEND_URL}/api/accounts/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(account)
+    })
+    return await response.json()
+  }
 
-	async function registerAccount({ account }) {
-		const response = await fetch(`${BACKEND_URL}/api/accounts`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(account),
-		});
-		return await response.json();
-	}
+  async function registerAccount ({ account }) {
+    const response = await fetch(`${BACKEND_URL}/api/accounts`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(account)
+    })
+    return await response.json()
+  }
 
-	async function deleteAccount({ id }) {
-		const response = await fetch(`${BACKEND_URL}/api/accounts/${id}`, {
-			method: 'DELETE',
-		});
-		return await response.json();
-	}
-	return {
-		accounts,
-		setAccounts,
-		registerAccount,
-		updateAccount,
-		deleteAccount,
-		error,
-	};
+  async function deleteAccount ({ id }) {
+    const response = await fetch(`${BACKEND_URL}/api/accounts/${id}`, {
+      method: 'DELETE'
+    })
+    return await response.json()
+  }
+  return {
+    accounts,
+    setAccounts,
+    registerAccount,
+    updateAccount,
+    deleteAccount,
+    error,
+    loading
+  }
 }

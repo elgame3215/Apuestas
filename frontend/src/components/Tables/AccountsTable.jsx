@@ -21,6 +21,7 @@ export function AccountsTable () {
     registerAccount,
     updateAccount,
     deleteAccount,
+	 loading,
     error
   } = useAccounts({
     formatter: formatAccountsData,
@@ -29,6 +30,10 @@ export function AccountsTable () {
 
   if (error) {
     return <p className='text-green'>Error</p>
+  }
+
+  if (loading) {
+    return <p className='text-green'>Cargando...</p>
   }
 
   const handleDelete = ({ key, id }) => {

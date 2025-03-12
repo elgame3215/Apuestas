@@ -12,7 +12,7 @@ export function CardsContainer () {
     getBets()
   }, [])
 
-  if (loading) return <h1>Cargando...</h1>
+  if (loading) return <h1 className='text-green'>Cargando...</h1>
   if (error) return <h1 className='text-green'>Error</h1>
 
   const activeBets = bets.filter(bet => bet.status === 'active')

@@ -1,7 +1,7 @@
 import React from 'react'
-import { CONFIG } from '../config/config.js';
+import { CONFIG } from '../config/config.js'
 
-const { BACKEND_URL } = CONFIG;
+const { BACKEND_URL } = CONFIG
 
 export function Login () {
   return (
