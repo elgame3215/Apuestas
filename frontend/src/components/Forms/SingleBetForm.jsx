@@ -56,7 +56,7 @@ export function SingleBetForm ({
 				  { min: 1, message: 'Cuota debe ser mayor a 1' }
         ]}
       >
-        <Input style={inputStyle} />
+        <Input type='number' style={inputStyle} />
       </Form.Item>
       <Form.Item
         name={parseName('accounts')}

@@ -32,6 +32,7 @@ export function RegisterBetForm () {
   function onfinish (values) {
     console.log({ values })
     if (values.oppositeBet) {
+      values.oppositeBet.isFreeBet = values.isFreeBet
       values.oppositeBet.group = values.group
     }
     try {
