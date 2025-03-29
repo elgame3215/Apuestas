@@ -1,12 +1,9 @@
-import { allowInsecurePrototypeAccess } from '@handlebars/allow-prototype-access'
 import { apiRouter } from './routes/indes.js'
 import { CONFIG } from './config/config.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
-import { engine } from 'express-handlebars'
 import express from 'express'
 import { expressJoiValidations } from 'express-joi-validations'
-import Handlebars from 'handlebars'
 import { initializePassport } from './auth/passport.init.js'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
@@ -32,16 +29,6 @@ app.use(cookieParser())
 // PASSPORT
 app.use(passport.initialize())
 initializePassport()
-
-// HANDLEBARS
-app.set('view engine', 'handlebars')
-app.set('views', './src/views')
-app.engine(
-  'handlebars',
-  engine({
-    handlebars: allowInsecurePrototypeAccess(Handlebars)
-  })
-)
 
 // MORGAN
 app.use(morgan('dev'))
