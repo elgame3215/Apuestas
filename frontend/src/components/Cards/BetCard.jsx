@@ -15,7 +15,8 @@ export function BetCard ({
   amount,
   odds,
   oppositeBet,
-  betID
+  betID,
+  pay
 }) {
   const [activeTabKey, setActiveTabKey] = useState(betID)
   const [betStatus, setBetStatus] = useState('active')
@@ -26,16 +27,15 @@ export function BetCard ({
   }
 
   const handleResolve =
-		({ betResult }) =>
-		  () => {
-		    try {
-		      resolveBet(activeTabKey, { betResult })
-		      setBetStatus(betResult)
-		    } catch (error) {
-		      toastifyError({ message: 'Error al resolver la apuesta' })
-		    }
-		  }
-
+    ({ betResult }) =>
+      () => {
+        try {
+          resolveBet(activeTabKey, { betResult })
+          setBetStatus(betResult)
+        } catch (error) {
+          toastifyError({ message: 'Error al resolver la apuesta' })
+        }
+      }
   const handleCancel = () => {
     try {
       cancelBet(activeTabKey)
@@ -45,27 +45,30 @@ export function BetCard ({
     }
   }
 
-  const onTabChange = key => {
+  const onTabChange = (key) => {
     setActiveTabKey(key)
     console.log({ tabContent })
   }
 
   const titleNode = group ?? description
 
-  function descriptionNode ({ accounts, amount, odds }) {
+  function descriptionNode ({ accounts, amount, odds, pay }) {
+    console.log({ pay })
     return (
       <ul>
-        <li>cuentas: {accounts.map(account => account.username).join(', ')}</li>
+        <li>
+          cuentas: {accounts.map((account) => account.username).join(', ')}
+        </li>
         <li>monto: {formatToCurrency(amount)}</li>
         <li>cuota: {odds}</li>
-        <li>paga: {formatToCurrency(odds * amount)}</li>
+        <li>paga: {formatToCurrency(pay)}</li>
       </ul>
     )
   }
 
   const tabContent = oppositeBet
     ? {
-        [betID]: descriptionNode({ accounts, amount, odds }),
+        [betID]: descriptionNode({ accounts, amount, odds, pay }),
         [oppositeBet.id]: descriptionNode(oppositeBet)
       }
     : null
@@ -105,16 +108,16 @@ export function BetCard ({
       <Card
         title={titleNode}
         style={{
-				  width: 300
+          width: 300
         }}
         actions={actions}
         tabList={tabList}
         onTabChange={onTabChange}
         tabProps={{
-				  size: 'small',
-				  style: { marginBottom: 0 },
-				  centered: true,
-				  tabBarGutter: 30
+          size: 'small',
+          style: { marginBottom: 0 },
+          centered: true,
+          tabBarGutter: 30
         }}
       >
         {tabContent[activeTabKey]}
@@ -127,11 +130,11 @@ export function BetCard ({
       <Card
         title={titleNode}
         style={{
-				  width: 300
+          width: 300
         }}
         actions={actions}
       >
-        {descriptionNode({ accounts, amount, odds })}
+        {descriptionNode({ accounts, amount, odds, pay })}
       </Card>
     )
   }

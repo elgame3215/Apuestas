@@ -24,6 +24,11 @@ const betSchema = new Schema(
   }
 )
 
+betSchema.virtual('pay').get(function () {
+  const pay = this.amount * this.odds - (this.isFreeBet ? this.amount : 0)
+  return Math.round(pay)
+})
+
 betSchema.plugin(mongooseLeanVirtuals)
 
 betSchema.pre('find', function () {
